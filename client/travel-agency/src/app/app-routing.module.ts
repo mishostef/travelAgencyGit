@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ContactsComponent } from './contacts/contacts.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthActivate } from './shared/guards/auth.activate';
@@ -36,6 +37,10 @@ const routes: Routes = [
             authenticationRequired:true,
             failureRedirectTo:'/home'
         }
+    },
+    {
+        path: 'contacts',
+        component: ContactsComponent
     },
     {
         path: '**',
