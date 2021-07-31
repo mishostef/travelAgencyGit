@@ -1,0 +1,23 @@
+
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div *ngIf="!!all.length" class="col-sm-8">
+
+    <div class="row" *ngFor="let item of all">
+      <app-trip class="col-sm-3 col-lg-3 col-md-3 m-1 " [data]="item"></app-trip>
+      <!--app-trip class="col-sm-3 col-lg-3 col-md-3 m-1" [data]="all[1]"></app-trip>
+      <app-trip class="col-sm-3 col-lg-3 col-md-3 m-1" [data]="all[2]"></app-trip-->
+    </div>
+    <!--div class="row">
+      <app-trip class="col-sm-3 m-1" [data]="all[0]"></app-trip>
+      <app-trip class="col-sm-3 m-1" [data]="all[1]"></app-trip>
+      <app-trip class="col-sm-3 m-1" [data]="all[2]"></app-trip>
+    </div>
+    <div class="row">
+      <app-trip class="col-sm-3 m-1" [data]="all[0]"></app-trip>
+      <app-trip class="col-sm-3 m-1" [data]="all[1]"></app-trip>
+      <app-trip class="col-sm-3 m-1" [data]="all[2]"></app-trip>
+    </div-->  
+  </div>
+  <div class="col-sm-2"></div>
+</div>

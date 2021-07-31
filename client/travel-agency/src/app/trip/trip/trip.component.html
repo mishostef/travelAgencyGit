@@ -1,0 +1,27 @@
+<div *ngIf="!!data" class="row">
+
+  <!--Card image-->
+  <img class="img-fluid" [src]="data.img" alt="Card image cap">
+  <!--/.Card image-->
+  <!--Card content-->
+  <div class="card-block ml-3">
+    <!--Title-->
+    <h4 id="responsive-font-example" class="small card-title responsive-font-example m-3 ">{{data.destination}}</h4>
+    <!--Text-->
+    <p class="small card-text responsive-font-example m-3 p-3">{{data.description}}</p>
+
+    <p class="small text-info pl-3 pt-0 ml-3">
+      <span class="responsive-font-example">From:</span>
+      <span class="ml-1 responsive-font-example">{{start}}</span>
+      <span class="ml-1 responsive-font-example">To:</span>
+      <span class="ml-1 responsive-font-example">{{end}}</span>
+    </p>
+
+    <p class="small text-info pl-3 ml-4 pt-0 responsive-font-example">Price:<span class="ml-3 small">{{data.price}}</span></p>
+    <a [routerLink]="['/details',id]" class="btn btn-sm btn-primary" ripple-radius>Details</a>
+    <button id="join" class="btn btn-sm btn-primary" *ngIf="canJoin" (click)="reserveHandler()">Join</button>
+  </div>
+  <!--/.Card content-->
+
+
+</div>

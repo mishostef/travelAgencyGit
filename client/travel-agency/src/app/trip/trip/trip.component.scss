@@ -1,0 +1,24 @@
+span{
+    font-size:x-small;
+    row-gap: 1px;
+}
+/*
+@media (min-width: 570px) {
+  #responsive-font-example {
+    padding-left: 5rem !important;
+    font-size: 60%;
+  }
+}*/
+/* If the screen size is smaller than 1200px, set the font-size to 80px */
+@media only screen and (max-width: 780px) and (min-width: 570px) {
+  .responsive-font-example {
+    padding-left: 5rem !important;
+    font-size: 60%;
+  }
+  .btn{
+      font-size: 0.6rem!important;
+  }
+}
+span{
+  display: inline-block;
+}

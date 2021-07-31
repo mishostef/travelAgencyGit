@@ -1,0 +1,9 @@
+{
+    "destination": "Mexico",
+    "type": "bus",
+    "startAt": "2021-12-09",
+    "endAt": "2021-12-29",
+    "price": 77,
+    "img": "myImg",
+    "seats": 38
+}
