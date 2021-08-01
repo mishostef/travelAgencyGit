@@ -28,24 +28,28 @@ export class TripService {
 
 
   getExcursions(query = '') {
+    const token = localStorage.getItem('authToken');
+    this.httpOptions.headers["x-authorization"] = token;
     console.log(`query in service=${query}`);
     const res = this.http.get(`${this.URL}${query}`, this.httpOptions)
       .pipe(
         tap((x) => {
           console.log(`x=${x}`);
         })
-        , catchError(handleError<ITrip>('getTrips'))
+        , catchError(handleError<ITrip>('getExcursions'))
       )
     return res;
   }
 
   getExcursionsById(id) {
+    const token = localStorage.getItem('authToken');
+    this.httpOptions.headers["x-authorization"] = token;
     const res = this.http.get(`${this.URL}/${id}`, this.httpOptions)
       .pipe(
         tap((x) => {
           console.log(`x=${x}`);
         })
-        , catchError(handleError<ITrip>('getTrips'))
+        , catchError(handleError<ITrip>('getExcursionsById'))
       )
     return res;
 
@@ -64,7 +68,7 @@ export class TripService {
         tap((x) => {
           console.log(`x=${x}`);
         })
-        , catchError(handleError<ITrip>('getTrips'))
+        , catchError(handleError<ITrip>('checkUserEnlisted'))
       );
   }
 

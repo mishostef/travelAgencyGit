@@ -45,7 +45,7 @@
         <a *ngIf="islogged" class="nav-link d-sm-flex align-items-sm-center" href="#">
           <img src="https://mdbootstrap.com/img/new/avatars/1.jpg" class="rounded-circle" height="22" alt=""
             loading="lazy" />
-          <strong class="d-none d-sm-block ms-1">{{email}}</strong>
+          <strong class="d-none d-sm-block ms-1">{{getMail()}}</strong>
         </a>
       </li>
       <li *ngIf="islogged"><button type="button" class="btn btn-info btn-sm" (click)="logoutHandler()">Logout</button>

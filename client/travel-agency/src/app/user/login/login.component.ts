@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { getPropFromResponse } from 'app/shared/utils';
+import { pipe } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   handleLogin({ email, password }: { email: string, password: string }) {
 
-    this.userService.loginUser(email, password).subscribe((res) => {
+    this.userService.loginUser(email, password).pipe(throttleTime(300)).subscribe((res) => {
       const { x, token } = getPropFromResponse(res, 'accessToken');
       document.cookie = token;
       localStorage.setItem('authToken', token);

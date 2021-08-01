@@ -13,15 +13,11 @@ export class UserService {
   private httpOptions = {
     headers: new Headers({ 'Content-Type': 'application/json' })
   };
-
-  /*getUsers() {
-    return this.http.get(this.URL);
-  }*/
-
+  
   constructor(private http: Http) { }
 
   registerUser(email, password) {
-    const registerUrl = "http://localhost:3030/users/register";
+    const registerUrl = `${this.URL}/users/register`;
     return this.http.post(registerUrl, JSON.stringify({ email, password }), this.httpOptions)
       .pipe(
         tap((res) => console.log(`added user ${res}`)),
@@ -34,7 +30,7 @@ export class UserService {
   }
 
   loginUser(email, password) {
-    const loginUrl = "http://localhost:3030/users/login";
+    const loginUrl = `${this.URL}/users/login`;
     return this.http.post(loginUrl, JSON.stringify({ email, password }), this.httpOptions)
       .pipe(
 
