@@ -9,6 +9,11 @@ const schema = new Schema({
     endAt: { type: Date },
     description: { type: String },
     price: { type: Number },
+
+    isVacation: { type: Boolean, default: false },
+    isPromoted: { type: Boolean, default: false },
+    isNewOne: { type: Boolean, default: false },
+
     img: { type: String },
     seats: { type: Number },
     taken: { type: Number, default: 0 },
