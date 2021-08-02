@@ -1,8 +1,55 @@
 const router = require('express').Router();
-const { getAll, create, getById, update, remove, getByDestination, reserveSeat } = require('../services/excursion');
+const { getAll, create, getPromotions, getByDestination,
+     reserveSeat, getVacations, getNew,getExcursions } = require('../services/excursion');
 const { isAuth, isOwner } = require('../middlewares/guards');
 const { parseError } = require('../util');
 const preload = require('../middlewares/preload');
+
+
+router.get('/promotions', async (req, res) => {
+    try {
+        const promotions = await getPromotions();
+        res.status('200').json(promotions);
+    } catch (err) {
+        console.error(err);
+        res.json({ "message": "promotions error" });
+    }
+
+})
+
+router.get('/vacations', async (req, res) => {
+    try {
+        const promotions = await getVacations();
+        res.status('200').json(promotions);
+    } catch (err) {
+        console.error(err);
+        res.json({ "message": "vacations error" });
+    }
+
+})
+
+router.get('/new', async (req, res) => {
+    try {
+        const promotions = await getNew();
+        res.status('200').json(promotions);
+    } catch (err) {
+        console.error(err);
+        res.json({ "message": " new trip error" });
+    }
+
+})
+
+router.get('/excursions', async (req, res) => {
+    try {
+        const promotions = await getExcursions();
+        res.status('200').json(promotions);
+    } catch (err) {
+        console.error(err);
+        res.json({ "message": "excursions error" });
+    }
+
+})
+
 
 
 router.get('/', async (req, res) => {
@@ -23,7 +70,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-   // console.log(req.body);
+    // console.log(req.body);
 
     const data = {
         destination: req.body.destination,
@@ -45,24 +92,26 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/:id',isAuth(), preload(), async (req, res) => {
+router.get('/:id', isAuth(), preload(), async (req, res) => {
     const item = req.data.toObject();
     console.log(item);
     res.json(item);
 });
 
+
+
+
 router.post('/:id', isAuth(), async (req, res) => {
     const excursionId = req.params.id;
-        const user = req.user;
+    const user = req.user;
     const userId = user._id;
     try {
         await reserveSeat(excursionId, userId);
     } catch (err) {
         console.dir(err);
     }
-    res.status('201').json( {"message":"success"});
+    res.status('201').json({ "message": "success" });
 })
-
 
 
 module.exports = router;
