@@ -44,6 +44,23 @@ async function remove(id) {
     return Excursion.findByIdAndDelete(id);
 
 }
+
+async function getPromotions() {
+    return Excursion.find({ "isPromoted": true });
+}
+
+async function getVacations() {
+    return Excursion.find({ "isVacation": true });
+}
+
+async function getNew() {
+    return Excursion.find({ "isNewOne": true });
+}
+
+async function getExcursions(){
+    return Excursion.find({ "isVacation": false });
+}
+
 module.exports = {
     getAll,
     getById,
@@ -51,5 +68,9 @@ module.exports = {
     update,
     remove,
     getByDestination,
-    reserveSeat
+    reserveSeat,
+    getPromotions,
+    getVacations,
+    getNew,
+    getExcursions
 }
