@@ -7,10 +7,6 @@
       <a class="navbar-brand me-2 mb-1 d-flex align-items-center" routerLink="/user">
         <img src="../../../assets/globe.png" height="30" alt="" loading="lazy" style="margin-top: 2px;" />
       </a>
-      <!--form action="http://localhost:4200" method="get">
-          <input  name="dest">
-          <button></button>
-      </form-->
       <!-- Search form -->
       <form #form="ngForm" (ngSubmit)="searchByDestinationHandler(form)"
         class="input-group w-auto my-auto d-none d-sm-flex">
@@ -22,11 +18,12 @@
     <!-- Left elements -->
     <ul class="navbar-nav flex-row d-none d-md-flex">
       <li class="p-2 text-primary"><a routerLink="/home">Home</a></li>
-      <li class="p-2 text-primary"><a>Excursions</a></li>
-      <li class="p-2 text-primary"><a>Vacations</a></li>
-      <li *ngIf="islogged" class="p-2 text-primary"><a>Promotions</a></li>
-      <li class="p-2 text-primary"><a>New</a></li>
-      <li *ngIf="!islogged" class="p-2"><a routerLink="/login"><span class="text-danger">Login</span></a></li>
+      <li class="p-2 text-primary"><a routerLink="/excursions">Excursions</a></li>
+      <li class="p-2 text-primary"><a routerLink="/vacations">Vacations</a></li>
+      <li *ngIf="islogged" class="p-2 text-primary"><a routerLink="/promotions">Promotions</a></li>
+      <li class="p-2 text-primary"><a routerLink="/new">New</a></li>
+      <li *ngIf="!islogged" class="p-2 text-danger"><a routerLink="/login"><span class="text-danger">Login</span></a>
+      </li>
       <li *ngIf="!islogged" class="p-2 text-danger"><a routerLink="/register">Register</a></li>
     </ul>
     <!-- Center elements -->
