@@ -1,3 +1,8 @@
-<p>
-  trip-list-vacations works!
-</p>
+<h2 *ngIf="!vacations.length" class="text-infi text-center">
+  no promotions yet
+</h2>
+<div *ngIf="vacations.length">
+  <div *ngFor="let trip of vacations">
+    <app-trip class="m-1" [data]="trip"></app-trip>
+  </div>
+</div>
