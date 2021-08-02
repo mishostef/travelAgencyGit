@@ -1,9 +1,9 @@
-import { Component, OnChanges, OnInit, SimpleChanges, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { TripService } from '../trip.service';
 import { ITrip } from 'app/shared/interfaces/trip';
 import { take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavigationStart, NavigationEnd, NavigationError, NavigationCancel, RoutesRecognized } from '@angular/router';
+import { NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 
@@ -14,6 +14,9 @@ import { Subscription } from 'rxjs';
 })
 export class TripListComponent implements OnInit, OnDestroy {
   all: ITrip[] = [];
+  center: ITrip[] = [];
+  left: ITrip[] = [];
+  right: ITrip[] = [];
   subscription: Subscription;
 
 
@@ -25,18 +28,24 @@ export class TripListComponent implements OnInit, OnDestroy {
         const url = ev.url
         const dest = url.split('=')[1];
         const destination = dest == undefined ? '' : `?destination=${dest}`;
-        this.getCurrentExcursions(destination);
+        this.getCurrentExcursions(destination);        
       });
   }
+
   private getCurrentExcursions(destination: string) {
     this.subscription = this.tripService.getExcursions(destination).subscribe((res) => {
       const allTrips = JSON.parse(res['_body']);
       this.all = (allTrips as ITrip[]).map(x => {
-        console.log(x.img)
-        x.img = `../../../assets/${x.img}.jpg`||x.img;
+        x.img = `../../../assets/${x.img}.jpg` || x.img;
         return x;
-      }).slice(0, 8);
-
+      });
+      const n = this.all.length / 3 | 1;
+      this.left = this.all.slice(0, n);
+      console.log(`this.center.length  ${this.center.length}`)
+      this.right = this.all.slice(n, 2 * n);
+      console.log(`this.left.length ${this.left.length}`)
+      this.center = this.all.slice(2 * n);
+      console.log(`right: ${this.right.length}`);
     });
   }
 
@@ -44,12 +53,11 @@ export class TripListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-
-
   ngOnInit() {
     const dest = this.activatedRoute.snapshot.queryParams['destination'];
     const destination = dest == undefined ? '' : `?destination=${dest}`;
     this.getCurrentExcursions(destination);
+   
   }
 
 }
