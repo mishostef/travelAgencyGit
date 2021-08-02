@@ -3,11 +3,6 @@ import { Headers, Http } from '@angular/http';
 import handleError from '../shared/error';
 import { ITrip } from 'app/shared/interfaces/trip';
 import { catchError, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import { range } from 'rxjs/observable/range';
-import { take } from 'rxjs/operators';
-import { first, map } from 'rxjs/operators';
-import { tokenReference } from '@angular/compiler';
 import { getUserId } from 'app/shared/utils';
 
 
@@ -57,8 +52,6 @@ export class TripService {
 
   reserveSeat(excursionId) {
     const userId = getUserId();
-    console.log(userId);
-    console.dir(this.httpOptions);
     return this.http.post(`${this.URL}/${excursionId}`, JSON.stringify({ userId }), this.httpOptions);
   }
 
@@ -70,6 +63,18 @@ export class TripService {
         })
         , catchError(handleError<ITrip>('checkUserEnlisted'))
       );
+  }
+
+  getPromoted() {
+    return this.http.get(`${this.URL}/promotions`, this.httpOptions)
+  }
+
+  getNewOffers() {
+    return this.http.get(`${this.URL}/new`, this.httpOptions);
+  }
+
+  getVactions() {
+    return this.http.get(`${this.URL}/vacations`, this.httpOptions);
   }
 
 }
