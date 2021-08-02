@@ -10,7 +10,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AppRoutingModule } from './app-routing.module';
-import { UserService} from './user/user.service';
+import { UserService } from './user/user.service';
 import { UserModule } from './user/user.module';
 import { TripModule } from './trip/trip.module';
 import { AuthActivate } from './shared/guards/auth.activate';
@@ -20,18 +20,18 @@ import { AuthActivate } from './shared/guards/auth.activate';
     AppComponent,
     ContactsComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
-    FormsModule,    
+    FormsModule,
     HttpModule,
     CoreModule,
     ButtonsModule,
     NavbarModule,
     UserModule,
-    
+
     TripModule,
     MDBBootstrapModule.forRoot()
   ],
