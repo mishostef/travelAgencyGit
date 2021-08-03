@@ -1,0 +1,17 @@
+<h2 *ngIf="!excursions.length" class="text-infi text-center">
+  no promotions yet
+</h2>
+<div *ngIf="excursions.length">
+  <div class="row" *ngFor="let item of left;let i = index">
+    <div *ngIf="left[i]" class="col-sm-3 col-lg-3 col-md-3 m-1">
+      <app-trip [data]="item"></app-trip>
+    </div>
+    <div *ngIf="center[i]" class="col-sm-3 col-lg-3 col-md-3 m-1">
+      <app-trip [data]="center[i]"></app-trip>
+    </div>
+    <div *ngIf="right[i]" class="col-sm-3 col-lg-3 col-md-3 m-1">
+      <app-trip [data]="right[i]"></app-trip>
+    </div>
+    <div class="col-sm-3 col-lg-3 col-md-3 m-1"></div>
+  </div>
+</div>
