@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { splitIntoThree } from 'app/shared/utils';
+import { getTripsFromResponse } from 'app/shared/utils';
+
 
 @Component({
   selector: 'app-trip-list',
@@ -34,11 +36,7 @@ export class TripListComponent implements OnInit, OnDestroy {
 
   private getCurrentExcursions(destination: string) {
     this.subscription = this.tripService.getExcursionsAndVacations(destination).subscribe((res) => {
-      const allTrips = JSON.parse(res['_body']);
-      this.all = (allTrips as ITrip[]).map(x => {
-        x.img = x.img.includes(`https`) ? x.img : `../../../assets/${x.img}.jpg`;
-        return x;
-      });
+      this.all = getTripsFromResponse(res);
       const arr = splitIntoThree(this.all);
       this.left = arr.left;
       this.center = arr.center;
