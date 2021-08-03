@@ -1,8 +1,17 @@
 <h2 *ngIf="!vacations.length" class="text-infi text-center">
-  no promotions yet
+  Loading...
 </h2>
 <div *ngIf="vacations.length">
-  <div *ngFor="let trip of vacations">
-    <app-trip class="m-1" [data]="trip"></app-trip>
+  <div class="row" *ngFor="let item of left;let i = index">
+    <div *ngIf="left[i]" class="col-sm-3 col-lg-3 col-md-3 m-1">
+      <app-trip [data]="item"></app-trip>
+    </div>
+    <div *ngIf="center[i]" class="col-sm-3 col-lg-3 col-md-3 m-1">
+      <app-trip [data]="center[i]"></app-trip>
+    </div>
+    <div *ngIf="right[i]" class="col-sm-3 col-lg-3 col-md-3 m-1">
+      <app-trip [data]="right[i]"></app-trip>
+    </div>
+    <div class="col-sm-3 col-lg-3 col-md-3 m-1"></div>
   </div>
 </div>

@@ -25,7 +25,7 @@ export class TripComponent implements OnInit {
 
   ngOnInit() {
    // console.log(`data is:${JSON.stringify(this.data)}`)
-    this.start = this.dateTransform(this.data.startAt);
+    //this.start = this.dateTransform(this.data.startAt);
     this.end = this.dateTransform(this.data.endAt);
     this.id = this.data['_id'];
     this.canBeEnlisted();

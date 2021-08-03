@@ -22,7 +22,7 @@ export class TripService {
 
 
 
-  getExcursions(query = '') {
+  getExcursionsAndVacations(query = '') {
     const token = localStorage.getItem('authToken');
     this.httpOptions.headers["x-authorization"] = token;
     console.log(`query in service=${query}`);
@@ -31,7 +31,7 @@ export class TripService {
         tap((x) => {
           console.log(`x=${x}`);
         })
-        , catchError(handleError<ITrip>('getExcursions'))
+        , catchError(handleError<ITrip>('getExcursionsAndVacations'))
       )
     return res;
   }
@@ -75,6 +75,10 @@ export class TripService {
 
   getVactions() {
     return this.http.get(`${this.URL}/vacations`, this.httpOptions);
+  }
+
+  getExcursions(){
+    return this.http.get(`${this.URL}/excursions`, this.httpOptions);
   }
 
 }

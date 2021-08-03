@@ -21,7 +21,7 @@ export class TripListPromoComponent implements OnInit,OnDestroy {
       subscribe(res => {
         this.promoted = (JSON.parse(res['_body']) as ITrip[])
           .map(x => {
-            x.img = `../../../assets/${x.img}.jpg` || x.img;
+            x.img = x.img.includes(`https`) ? x.img : `../../../assets/${x.img}.jpg`;
             return x;
           });
       });

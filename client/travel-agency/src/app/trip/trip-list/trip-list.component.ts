@@ -5,7 +5,7 @@ import { take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
-
+import { splitIntoThree } from 'app/shared/utils';
 
 @Component({
   selector: 'app-trip-list',
@@ -28,26 +28,24 @@ export class TripListComponent implements OnInit, OnDestroy {
         const url = ev.url
         const dest = url.split('=')[1];
         const destination = dest == undefined ? '' : `?destination=${dest}`;
-        this.getCurrentExcursions(destination);        
+        this.getCurrentExcursions(destination);
       });
   }
 
   private getCurrentExcursions(destination: string) {
-    this.subscription = this.tripService.getExcursions(destination).subscribe((res) => {
+    this.subscription = this.tripService.getExcursionsAndVacations(destination).subscribe((res) => {
       const allTrips = JSON.parse(res['_body']);
       this.all = (allTrips as ITrip[]).map(x => {
-        x.img = `../../../assets/${x.img}.jpg` || x.img;
+        x.img = x.img.includes(`https`) ? x.img : `../../../assets/${x.img}.jpg`;
         return x;
       });
-      const n = this.all.length / 3 | 1;
-      this.left = this.all.slice(0, n);
-      console.log(`this.center.length  ${this.center.length}`)
-      this.right = this.all.slice(n, 2 * n);
-      console.log(`this.left.length ${this.left.length}`)
-      this.center = this.all.slice(2 * n);
-      console.log(`right: ${this.right.length}`);
+      const arr = splitIntoThree(this.all);
+      this.left = arr.left;
+      this.center = arr.center;
+      this.right = arr.right
     });
   }
+
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -57,7 +55,7 @@ export class TripListComponent implements OnInit, OnDestroy {
     const dest = this.activatedRoute.snapshot.queryParams['destination'];
     const destination = dest == undefined ? '' : `?destination=${dest}`;
     this.getCurrentExcursions(destination);
-   
+
   }
 
 }
