@@ -1,9 +1,6 @@
-{
-    "destination": "Mexico",
-    "type": "bus",
-    "startAt": "2021-12-09",
-    "endAt": "2021-12-29",
-    "price": 77,
-    "img": "myImg",
-    "seats": 38
-}
+{"_id":{"$oid":"6105a1b66aaee02bbc85a66b"},"type":"bus","taken":0,"isVacation":false,"isPromoted":false,"isNewOne":false,"participants":[{"$oid":"6105a0826aaee02bbc85a666"},{"$oid":"6106f61178476b26f82b26d2"}],"destination":"Mexico","startAt":{"$date":"2021-12-09T00:00:00.000Z"},"endAt":{"$date":"2021-12-29T00:00:00.000Z"},"description":"Маршрут: Мексико Сити - Теотиуакан","price":77,"img":"myImg","seats":36,"__v":2}
+{"_id":{"$oid":"6105a4316aaee02bbc85a66f"},"type":"bus","isVacation":false,"isPromoted":false,"isNewOne":false,"taken":0,"participants":[],"destination":"Albania","startAt":{"$date":"2021-11-09T00:00:00.000Z"},"endAt":{"$date":"2021-11-29T00:00:00.000Z"},"description":"Маршрут: Тирана - Дуръс - Круя - Берат - Елбасан","price":177,"img":"albania","seats":38,"__v":0}
+{"_id":{"$oid":"6105a8bb6aaee02bbc85a686"},"type":"bus","isVacation":false,"isPromoted":false,"isNewOne":false,"taken":0,"participants":[],"destination":"Bulgaria","startAt":{"$date":"2021-11-09T00:00:00.000Z"},"endAt":{"$date":"2021-11-29T00:00:00.000Z"},"description":"Маршрут: София - Пловдив - яз.Доспат","price":177,"img":"bulgaria","seats":38,"__v":0}
+{"_id":{"$oid":"6106ff9fbf53b02bfca6ac95"},"type":"plane","isVacation":true,"isPromoted":true,"isNewOne":true,"taken":0,"participants":[],"destination":"Greece","startAt":{"$date":"2021-11-07T00:00:00.000Z"},"endAt":{"$date":"2021-11-17T00:00:00.000Z"},"description":"Маршрут: София - Закинтос - София","price":177,"img":"greece","seats":38,"__v":0}
+{"_id":{"$oid":"610862b654af4504fc2e3af1"},"type":"plane","isVacation":true,"isPromoted":false,"isNewOne":true,"taken":0,"participants":[],"destination":"Jamaica","startAt":{"$date":"2021-11-07T00:00:00.000Z"},"endAt":{"$date":"2021-11-17T00:00:00.000Z"},"description":"Маршрут: София - Ямайка - София","price":177,"img":"jamaica","seats":38,"__v":0}
+{"_id":{"$oid":"610935123561c92418c4230a"},"type":"plane","isVacation":false,"isPromoted":false,"isNewOne":false,"taken":0,"participants":[],"destination":"Italy","startAt":{"$date":"2021-11-07T00:00:00.000Z"},"endAt":{"$date":"2021-11-17T00:00:00.000Z"},"description":"Маршрут: София - Рим - София","price":177,"img":"https://image.shutterstock.com/image-photo/rope-walkway-through-treetops-rain-600w-61831771.jpg","seats":38,"__v":0}
