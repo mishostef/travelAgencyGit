@@ -18,8 +18,6 @@ export class RegisterComponent implements OnInit {
     this.userService.registerUser(email, password).subscribe((res) => {
 
       const x = res['_body'];
-      console.log('token', JSON.parse(x)['accessToken']);
-
       const token = JSON.parse(x)['accessToken'];
       document.cookie = JSON.parse(x)['accessToken']
       localStorage.setItem('authToken', token);
