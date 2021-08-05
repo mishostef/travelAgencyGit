@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
     } catch (err) {
       email = '';
     }
-    console.log(`logged: ${this.islogged}`);
+    // console.log(`logged: ${this.islogged}`);
     return email;
   }
 
