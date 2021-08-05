@@ -57,10 +57,12 @@ async function getNew() {
     return Excursion.find({ "isNewOne": true });
 }
 
-async function getExcursions(){
+async function getExcursions() {
     return Excursion.find({ "isVacation": false });
 }
-
+async function getByUserId(id) {
+    return Excursion.find({ "participants": { "$in": [id] } }).sort('startAt');
+}
 module.exports = {
     getAll,
     getById,
@@ -72,5 +74,6 @@ module.exports = {
     getPromotions,
     getVacations,
     getNew,
-    getExcursions
+    getExcursions,
+    getByUserId
 }
