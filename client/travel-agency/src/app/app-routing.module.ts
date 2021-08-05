@@ -11,6 +11,7 @@ import { TripListPromoComponent } from './trip/trip-list-promo/trip-list-promo.c
 import { TripListVacationsComponent } from './trip/trip-list-vacations/trip-list-vacations.component';
 import { TripListComponent } from './trip/trip-list/trip-list.component';
 import { LoginComponent } from './user/login/login.component';
+import { ProfileComponent } from './user/profile/profile.component';
 import { RegisterComponent } from './user/register/register.component';
 
 const routes: Routes = [
@@ -21,7 +22,7 @@ const routes: Routes = [
     },
     {
         path: 'home',
-        component: TripListComponent
+        component: HomeComponent
     },
     {
         path: 'login',
@@ -62,6 +63,11 @@ const routes: Routes = [
         path: 'excursions',
         component: TripListExcursionsComponent
     },
+    {
+        path: 'profile',
+        component: ProfileComponent
+    },
+    
     {
         path: '**',
         component: NotFoundComponent
