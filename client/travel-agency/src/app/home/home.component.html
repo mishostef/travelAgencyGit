@@ -1,4 +1,6 @@
 <p>
   home works!
 </p>
-<app-trip-list class="d-flex"></app-trip-list>
+<div *ngIf="all">
+  <app-trip-list [all]="all"></app-trip-list>
+</div>
