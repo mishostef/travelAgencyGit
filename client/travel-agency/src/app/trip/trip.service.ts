@@ -4,6 +4,7 @@ import handleError from '../shared/error';
 import { ITrip } from 'app/shared/interfaces/trip';
 import { catchError, tap } from 'rxjs/operators';
 import { getUserId } from 'app/shared/utils';
+import { map } from 'rxjs/operators';
 
 
 @Injectable()
@@ -51,6 +52,8 @@ export class TripService {
   }
 
   reserveSeat(excursionId) {
+    const token = localStorage.getItem('authToken');
+    this.httpOptions.headers["x-authorization"] = token;
     const userId = getUserId();
     return this.http.post(`${this.URL}/${excursionId}`, JSON.stringify({ userId }), this.httpOptions);
   }
@@ -80,5 +83,12 @@ export class TripService {
   getExcursions(){
     return this.http.get(`${this.URL}/excursions`, this.httpOptions);
   }
+  getTripsByUser(id){
+    return this.http.get(`${this.URL}?userid=${id}`, this.httpOptions)
+    .pipe(tap(x=>console.log(`in observable:${x}`))
+     
+      )
+  }
+
 
 }
