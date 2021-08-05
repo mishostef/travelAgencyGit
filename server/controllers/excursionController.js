@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { getAll, create, getPromotions, getByDestination,
-     reserveSeat, getVacations, getNew,getExcursions } = require('../services/excursion');
+    reserveSeat, getVacations, getNew, getExcursions,getByUserId } = require('../services/excursion');
 const { isAuth, isOwner } = require('../middlewares/guards');
 const { parseError } = require('../util');
 const preload = require('../middlewares/preload');
@@ -51,11 +51,21 @@ router.get('/excursions', async (req, res) => {
 })
 
 
-
 router.get('/', async (req, res) => {
     const destination = req.query.destination;
-    console.log(destination);
-    if (destination) {
+    //console.log(destination);
+    const id = req.query.userid;
+    //console.log(`id=${id}`);
+    if (id) {
+        try {
+            const data = await getByUserId(id);
+            console.log(data);
+            res.status(200).json(data);
+        } catch (err) {
+            res.status(404).json({ message: 'error occurred' })
+        }
+    }
+   else if (destination) {
         try {
             const data = await getByDestination(destination);
             console.log(data);
