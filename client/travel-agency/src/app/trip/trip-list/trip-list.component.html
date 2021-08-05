@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-2"></div>
-  <div *ngIf="!!all.length" class="col-sm-8">
+  <div *ngIf="!!allTrips.length" class="col-sm-8">
     <div class="row" *ngFor="let item of left;let i = index">
       <div *ngIf="left[i]" class="col-sm-3 col-lg-3 col-md-3 m-1">
         <app-trip [data]="item"></app-trip>

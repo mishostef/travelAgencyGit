@@ -1,12 +1,6 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { TripService } from '../trip.service';
+import { Component, OnInit, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { ITrip } from 'app/shared/interfaces/trip';
-import { take } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NavigationStart } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { splitIntoThree } from 'app/shared/utils';
-import { getTripsFromResponse } from 'app/shared/utils';
 
 
 @Component({
@@ -14,46 +8,32 @@ import { getTripsFromResponse } from 'app/shared/utils';
   templateUrl: './trip-list.component.html',
   styleUrls: ['./trip-list.component.scss']
 })
-export class TripListComponent implements OnInit, OnDestroy {
-  all: ITrip[] = [];
+
+export class TripListComponent implements OnInit, OnChanges {
+  @Input() all: ITrip[];
+  allTrips: ITrip[]
   center: ITrip[] = [];
   left: ITrip[] = [];
   right: ITrip[] = [];
-  subscription: Subscription;
 
-
-  constructor(private tripService: TripService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router) {
-    this.router.events.filter(event => event instanceof NavigationStart)
-      .subscribe((ev) => {
-        const url = ev.url
-        const dest = url.split('=')[1];
-        const destination = dest == undefined ? '' : `?destination=${dest}`;
-        this.getCurrentExcursions(destination);
-      });
+  constructor() {
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(`changes:${JSON.stringify(changes)}`)
+    this.allTrips = this.all;
+    this.split();
   }
 
-  private getCurrentExcursions(destination: string) {
-    this.subscription = this.tripService.getExcursionsAndVacations(destination).subscribe((res) => {
-      this.all = getTripsFromResponse(res);
-      const arr = splitIntoThree(this.all);
-      this.left = arr.left;
-      this.center = arr.center;
-      this.right = arr.right
-    });
-  }
-
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  private split() {
+    const arr = splitIntoThree(this.allTrips);
+    this.left = arr.left;
+    this.center = arr.center;
+    this.right = arr.right;
   }
 
   ngOnInit() {
-    const dest = this.activatedRoute.snapshot.queryParams['destination'];
-    const destination = dest == undefined ? '' : `?destination=${dest}`;
-    this.getCurrentExcursions(destination);
-
+    this.allTrips = this.all;
+    this.split();
   }
 
 }
