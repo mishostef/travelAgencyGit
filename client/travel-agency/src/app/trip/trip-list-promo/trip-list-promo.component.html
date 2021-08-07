@@ -1,8 +1,6 @@
-<h2 *ngIf="!promoted.length" class="text-info text-center">
+<h2 *ngIf="!promoted" class="text-info text-center">
   Loading...
 </h2>
-<div *ngIf="promoted.length">
-  <div *ngFor="let trip of promoted">
-    <app-trip class="col-sm-3 col-lg-3 col-md-3 m-1 " [data]="trip"></app-trip>
-  </div>
+<div *ngIf="promoted">
+  <app-trip-list [all]="promoted"></app-trip-list>
 </div>
