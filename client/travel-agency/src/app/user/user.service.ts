@@ -45,4 +45,10 @@ export class UserService {
     return this.http.get(`${this.URL}/users/logout`); 
   }
 
+  getUserById(id){
+    const token = localStorage.getItem('authToken');
+    this.httpOptions.headers["x-authorization"] = token;
+    return this.http.get(`${this.URL}/users/user/${id}`,this.httpOptions);
+  }
+
 }
