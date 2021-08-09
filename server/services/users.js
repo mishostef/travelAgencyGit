@@ -29,8 +29,8 @@ async function login(email, password) {
         err.status = 401;
         throw err;
     }
-    const match = await bcrypt.compare(password, user.hashedPassword); 
-    if(!match){
+    const match = await bcrypt.compare(password, user.hashedPassword);
+    if (!match) {
         const err = new Error('Incorrect email or password');
         err.status = 401;
         throw err;
@@ -54,7 +54,14 @@ async function createToken(user) {
     return token;
 }
 
+async function getUserById(id) {
+    const user = await User.findById(id);
+    if (!user) throw new Error(`No such user`);
+    return user.email;
+}
+
 module.exports = {
     register,
-    login
+    login,
+    getUserById
 }

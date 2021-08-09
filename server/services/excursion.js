@@ -1,4 +1,6 @@
 const Excursion = require('../models/excursion');
+const user = require('../models/user');
+const User = require('../models/user');
 
 async function getAll() {
     return Excursion.find({}).lean();
@@ -60,9 +62,28 @@ async function getNew() {
 async function getExcursions() {
     return Excursion.find({ "isVacation": false });
 }
+
 async function getByUserId(id) {
-    return Excursion.find({ "participants": { "$in": [id] } }).sort('startAt');
+    const excursions = await Excursion.find({ "participants": { "$in": [id] } }).sort('startAt');
+    const output = [];
+
+    for (const exx of excursions) {
+        ex = exx.toObject();
+        const participants = ex.participants;
+        const excNames = await getNames(participants);
+        ex.names = excNames;
+        output.push(ex);
+    };
+    return output;
 }
+
+
+async function getNames(participants) {
+    const users = await User.find().where('_id').in(participants);
+    console.log((users.map(u => u.email)));
+    return ((users.map(u => u.email)));
+}
+
 module.exports = {
     getAll,
     getById,
