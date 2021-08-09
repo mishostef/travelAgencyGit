@@ -1,6 +1,22 @@
-<p>
-  profile works!
-</p>
-<div *ngFor="let trip of myTrips">
+<div *ngIf="!myTrips">Loading...</div>
+<div *ngIf="myTrips ">
+  <h5 class="text-center text-info">My reservations:</h5>
+  <table>
+    <tr *ngFor="let trip of myTrips">
+      <td>{{trip.destination}}</td>
+      <td *ngFor="let participant of trip.names">{{participant}} </td>
+    </tr>
 
+  </table>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-5"></div>
+  <div *ngIf="chartData[0].data" id="myChart" style="display: block;" class="col-sm-2">
+    <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [colors]="chartColors"
+      [chartType]="type">
+    </canvas>
+  </div>
+  <div class="col-sm-5"></div>
 </div>

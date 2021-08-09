@@ -3,6 +3,11 @@ import { TripService } from 'app/trip/trip.service';
 import { Subscription } from 'rxjs';
 import { getUserId, } from 'app/shared/utils';
 import { ITrip } from 'app/shared/interfaces/trip';
+import { pipe } from 'rxjs';
+import { switchMap, map, tap } from 'rxjs/operators';
+import { toArray } from 'rxjs/operator/toArray';
+import { of } from 'rxjs/observable/of';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,15 +17,60 @@ import { ITrip } from 'app/shared/interfaces/trip';
 export class ProfileComponent implements OnInit, OnDestroy {
   myId: string = getUserId();
   subscription: Subscription;
-  myTrips:ITrip[] =[]; 
+  sub2: Subscription;
+  myTrips: ITrip[] = [];
+  allTrips: any[] = [];
 
-  constructor(private tripService: TripService) {
-    this.subscription = this.tripService.getTripsByUser(this.myId).subscribe(res=>{
-      this.myTrips = JSON.parse(res['_body']) as ITrip[];      
-    });
+  public type: string = 'bar';
+  public chartData: Array<any> = [{}];
+  public chartLabels: Array<any> = [];
+  public chartColors: Array<any> = [
+    {
+      backgroundColor: 'rgba(220,220,220,0.2)',
+      borderColor: 'rgba(220,220,220,1)',
+      borderWidth: 2,
+      pointBackgroundColor: 'rgba(220,220,220,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(220,220,220,1)'
+    },
+    {
+      backgroundColor: 'rgba(151,187,205,0.2)',
+      borderColor: 'rgba(151,187,205,1)',
+      borderWidth: 2,
+      pointBackgroundColor: 'rgba(151,187,205,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(151,187,205,1)'
+    }
+  ];
+
+
+
+
+  constructor(private tripService: TripService,
+    private userService: UserService) {
+    this.subscription =
+      this.tripService.getTripsByUser(this.myId).
+        subscribe(x => {
+          this.myTrips = JSON.parse(x['_body']);
+        });
+
+    this.sub2 = this.tripService.getExcursionsAndVacations()
+      .subscribe(res => {
+        this.allTrips = (JSON.parse(res['_body']) as ITrip[])
+          .map(trip => {
+            return { 'destination': trip.destination, 'price': trip.price }
+          });
+        console.log(`this.allTrips:${JSON.stringify(this.allTrips)}`);
+        this.chartLabels = this.allTrips.map(x => x['destination']);
+        this.chartData[0] = { data: this.allTrips.map(x => +x['price']), label: 'My First dataset' };
+      });
+
   }
   ngOnDestroy(): void {
-  this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
+    this.sub2.unsubscribe();
   }
 
   ngOnInit() {
