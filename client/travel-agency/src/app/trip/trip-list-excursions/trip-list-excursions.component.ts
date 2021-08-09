@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ITrip } from 'app/shared/interfaces/trip';
 import { TripService } from '../trip.service';
 import { Subscription } from 'rxjs';
-import { splitIntoThree, getTripsFromResponse } from 'app/shared/utils';
+import { getTripsFromResponse } from 'app/shared/utils';
 
 
 @Component({
@@ -13,9 +13,6 @@ import { splitIntoThree, getTripsFromResponse } from 'app/shared/utils';
 export class TripListExcursionsComponent implements OnInit, OnDestroy {
 
   excursions: ITrip[] = [];
-  center: ITrip[] = [];
-  left: ITrip[] = [];
-  right: ITrip[] = [];
 
   subscription: Subscription;
 
@@ -30,10 +27,6 @@ export class TripListExcursionsComponent implements OnInit, OnDestroy {
     this.subscription = this.travelService.getExcursions()
       .subscribe(res => {
         this.excursions = getTripsFromResponse(res);
-        const arr = splitIntoThree(this.excursions);
-        this.left = arr.left;
-        this.right = arr.right;
-        this.center = arr.center;
       });
   }
 
