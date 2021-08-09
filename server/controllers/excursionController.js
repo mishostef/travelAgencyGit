@@ -53,7 +53,6 @@ router.get('/excursions', async (req, res) => {
 
 router.get('/', async (req, res) => {
     const destination = req.query.destination;
-    //console.log(destination);
     const id = req.query.userid;
     //console.log(`id=${id}`);
     if (id) {
