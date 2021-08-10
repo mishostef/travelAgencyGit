@@ -10,11 +10,13 @@ import { TripListVacationsComponent } from './trip-list-vacations/trip-list-vaca
 import { TripListNewComponent } from './trip-list-new/trip-list-new.component';
 import { TripListExcursionsComponent } from './trip-list-excursions/trip-list-excursions.component';
 import { ShortenPipe } from './shorten.pipe';
+import { TripRoutingModule } from './trip-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    TripRoutingModule
   ],
   exports: [TripComponent, TripListComponent, TripDetailsComponent, TripListPromoComponent, TripListVacationsComponent, TripListNewComponent, TripListExcursionsComponent, ShortenPipe],
   providers: [TripService],

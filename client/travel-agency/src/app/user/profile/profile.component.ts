@@ -64,7 +64,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           });
         console.log(`this.allTrips:${JSON.stringify(this.allTrips)}`);
         this.chartLabels = this.allTrips.map(x => x['destination']);
-        this.chartData[0] = { data: this.allTrips.map(x => +x['price']), label: 'My First dataset' };
+        this.chartData[0] = { data: this.allTrips.map(x => +x['price']), label: 'price' };
       });
 
   }

@@ -6,13 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import { TripModule } from 'app/trip/trip.module';
 import { ChartsModule } from 'angular-bootstrap-md';
+import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     TripModule,
-    ChartsModule
+    ChartsModule,
+    UserRoutingModule
   ],
   exports: [LoginComponent, RegisterComponent],
   declarations: [LoginComponent, RegisterComponent, ProfileComponent]
