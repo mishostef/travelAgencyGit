@@ -9,14 +9,15 @@ import { TripListPromoComponent } from './trip-list-promo/trip-list-promo.compon
 import { TripListVacationsComponent } from './trip-list-vacations/trip-list-vacations.component';
 import { TripListNewComponent } from './trip-list-new/trip-list-new.component';
 import { TripListExcursionsComponent } from './trip-list-excursions/trip-list-excursions.component';
+import { ShortenPipe } from './shorten.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule
   ],
-  exports:[TripComponent, TripListComponent, TripDetailsComponent, TripListPromoComponent, TripListVacationsComponent, TripListNewComponent, TripListExcursionsComponent],
-  providers:[TripService],
-  declarations: [TripComponent, TripListComponent, TripDetailsComponent, TripListPromoComponent, TripListVacationsComponent, TripListNewComponent, TripListExcursionsComponent]
+  exports: [TripComponent, TripListComponent, TripDetailsComponent, TripListPromoComponent, TripListVacationsComponent, TripListNewComponent, TripListExcursionsComponent, ShortenPipe],
+  providers: [TripService],
+  declarations: [TripComponent, TripListComponent, TripDetailsComponent, TripListPromoComponent, TripListVacationsComponent, TripListNewComponent, TripListExcursionsComponent, ShortenPipe]
 })
 export class TripModule { }
