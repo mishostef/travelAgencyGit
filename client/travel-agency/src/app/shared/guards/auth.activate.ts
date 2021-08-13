@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { UserService } from "app/user/user.service";
 import { Observable } from "rxjs";
 
+
 @Injectable()
 export class AuthActivate implements CanActivate {
     constructor(private router: Router, private userService: UserService) { }
@@ -15,8 +16,8 @@ export class AuthActivate implements CanActivate {
         }
         //const loginRedirectUrl = route.url.reduce((acc,segment)=>`${acc}/${segment}`,'')
 
-        var x = this.router.navigate(failureRedirectTo || '/');
-        return x;
+        this.router.navigate(['/']);
+        return false;
     }
 
 }

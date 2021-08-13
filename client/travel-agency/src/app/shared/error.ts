@@ -1,7 +1,7 @@
 import { Observable} from "rxjs";
 import { of } from "rxjs/observable/of";
 
-export default function handleError<T>(operation = 'operation', result?: T) {
+export default function handleError<T>(operation , result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure

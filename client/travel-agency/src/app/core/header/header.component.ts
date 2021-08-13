@@ -13,8 +13,9 @@ import { TripService } from 'app/trip/trip.service';
 export class HeaderComponent implements OnInit {
 
   get islogged() { return this.userService.isLogged(); }
+  
   constructor(private userService: UserService,
-    private router: Router) { }
+    private router: Router) { console.log(`logged:${this.islogged}`) }
 
   email = '';
 

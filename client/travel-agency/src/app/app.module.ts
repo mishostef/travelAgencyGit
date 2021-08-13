@@ -15,6 +15,15 @@ import { UserModule } from './user/user.module';
 import { TripModule } from './trip/trip.module';
 import { AuthActivate } from './shared/guards/auth.activate';
 
+
+
+import { HttpServiceLayer } from './shared/classes/HttpServiceLayer';
+export function httpServiceFactory(xhrBackend: XHRBackend, requestOptions: RequestOptions, router: Router) {
+  return new HttpServiceLayer(xhrBackend, requestOptions, router);
+}
+
+import { Http, Request, RequestOptionsArgs, Response, XHRBackend, RequestOptions, ConnectionBackend, Headers } from '@angular/http';
+import { Router } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +44,11 @@ import { AuthActivate } from './shared/guards/auth.activate';
     TripModule,
     MDBBootstrapModule.forRoot()
   ],
-  providers: [UserService, AuthActivate],
+  providers: [UserService, AuthActivate, {
+    provide: Http,
+    useFactory: httpServiceFactory,
+    deps: [XHRBackend, RequestOptions, Router]
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

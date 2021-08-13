@@ -8,6 +8,8 @@ import { TripModule } from 'app/trip/trip.module';
 import { ChartsModule } from 'angular-bootstrap-md';
 import { UserRoutingModule } from './user-routing.module';
 
+
+
 @NgModule({
   imports: [
     CommonModule,

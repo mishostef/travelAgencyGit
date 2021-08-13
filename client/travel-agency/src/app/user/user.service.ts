@@ -18,7 +18,7 @@ export class UserService {
 
   registerUser(email, password) {
     const registerUrl = `${this.URL}/users/register`;
-    return this.http.post(registerUrl, JSON.stringify({ email, password }), this.httpOptions)
+    return this.http.post(registerUrl, JSON.stringify({ email, password }))//, this.httpOptions)
       .pipe(
         tap((res) => console.log(`added user ${res}`)),
         catchError(handleError<IUser>('addUser'))
@@ -31,13 +31,16 @@ export class UserService {
 
   loginUser(email, password) {
     const loginUrl = `${this.URL}/users/login`;
-    return this.http.post(loginUrl, JSON.stringify({ email, password }), this.httpOptions)
+    try{
+    var s= this.http.post(loginUrl, JSON.stringify({ email, password }))//, this.httpOptions)
       .pipe(
-
         tap((res) => console.log(`response: ${Object["values"](res)}`)),
-
-        catchError(handleError<IUser>('logUser'))
+        catchError(handleError<any>('logUser'))
       );
+      return s;
+    }catch(err){
+      alert(err)
+    }
   }
  
 
@@ -47,8 +50,8 @@ export class UserService {
 
   getUserById(id){
     const token = localStorage.getItem('authToken');
-    this.httpOptions.headers["x-authorization"] = token;
-    return this.http.get(`${this.URL}/users/user/${id}`,this.httpOptions);
+   // this.httpOptions.headers["x-authorization"] = token;
+    return this.http.get(`${this.URL}/users/user/${id}`)//,this.httpOptions);
   }
 
 }
