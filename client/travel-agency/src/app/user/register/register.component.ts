@@ -5,15 +5,16 @@ import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
+
 export class RegisterComponent implements OnInit, OnDestroy {
-  formchanges = false;
-  subscription: Subscription =new Subscription();
+  formchanges = '';
+  isSubmitted = false;
+  subscription: Subscription = new Subscription();
 
   @ViewChild('registerForm') ngForm: NgForm;
 
@@ -27,21 +28,21 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const sub1 = this.ngForm.form.valueChanges.subscribe(x => {
       console.log(x);
-      this.formchanges = true;
+      console.log(x.email);
+      this.formchanges = x.email.trim();
     })
     this.subscription.add(sub1);
   }
 
-  hasChanges(){
-    return this.formchanges;
+  hasChanges() {
+    return !!this.formchanges && !this.isSubmitted;
   }
 
   handleSubmit({ email, passwords: { password } }: { email: string, passwords: { password: string } }) {
     const sub2 = this.userService.registerUser(email, password).subscribe((res) => {
-
+      this.isSubmitted = true;
       const x = res['_body'];
       const token = JSON.parse(x)['accessToken'];
-      document.cookie = JSON.parse(x)['accessToken']
       localStorage.setItem('authToken', token);
       this.router.navigate([''])
 

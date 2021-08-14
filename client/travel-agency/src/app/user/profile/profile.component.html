@@ -1,22 +1,36 @@
-<div *ngIf="!myTrips">Loading...</div>
-<div *ngIf="myTrips ">
-  <h5 class="text-center text-info">My reservations:</h5>
-  <table>
-    <tr *ngFor="let trip of myTrips">
-      <td>{{trip.destination}}</td>
-      <td *ngFor="let participant of trip.names">{{participant}} </td>
-    </tr>
-
-  </table>
-</div>
-
-
-<div class="row">
-  <div class="col-sm-5"></div>
-  <div *ngIf="chartData[0].data" id="myChart" style="display: block;" class="col-sm-2">
-    <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [colors]="chartColors"
-      [chartType]="type">
-    </canvas>
+<div class="row container">
+  <div class="col-sm-4 reservations">
+    <div *ngIf="!myTrips">Loading...</div>
+    <div *ngIf="myTrips ">
+      <h5 class="text-center text-info">My reservations:</h5>
+      <table *ngIf="myTrips?.length!=0">
+        <tr *ngFor="let trip of myTrips">
+          <td>{{trip.destination}}</td>
+          <td *ngFor="let participant of trip.names">{{participant}} </td>
+        </tr>
+      </table>
+      <h5 class="text-center text-info" *ngIf="myTrips?.length==0">No reservations yet</h5>
+    </div>
   </div>
-  <div class="col-sm-5"></div>
+
+
+  <div class="col-sm-4 statistics">
+    <h6>statistics</h6>
+    <button (click)="compareTripsPrices()">compare trips prices:</button>
+    <div *ngIf="!chartData[0].data && pricesVisible">Loading...</div>
+    <div *ngIf="chartData[0].data && pricesVisible">
+      <app-chart [chartData]="chartData" [chartLabels]="chartLabels"></app-chart>
+    </div>
+    <button (click)="getMostVisited()">see most visited:</button>
+    <div *ngIf="!chartData[0].data && visitedVisible">Loading...</div>
+    <div *ngIf="chartData[0].data && visitedVisible">
+      <app-chart [chartData]="chartData" [chartLabels]="chartLabels"></app-chart>
+    </div>
+  </div>
+  <div class="col-sm-3 user-data">
+    <h6 class="text-center text-info">my user info</h6>
+    <h6 class="text-primary">email: {{myEmail}}</h6>
+    <h6 class="text-primary">Id: {{myId}}</h6>
+  </div>
+
 </div>

@@ -1,13 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TripService } from 'app/trip/trip.service';
 import { Subscription } from 'rxjs';
-import { getUserId, } from 'app/shared/utils';
+import { getUserId, getEmail } from 'app/shared/utils';
 import { ITrip } from 'app/shared/interfaces/trip';
-import { pipe } from 'rxjs';
-import { switchMap, map, tap } from 'rxjs/operators';
-import { toArray } from 'rxjs/operator/toArray';
-import { of } from 'rxjs/observable/of';
-import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,61 +11,75 @@ import { UserService } from '../user.service';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   myId: string = getUserId();
-  subscription: Subscription;
+  myEmail: string = getEmail();
+  sub1: Subscription;
   sub2: Subscription;
+  sub3: Subscription;
   myTrips: ITrip[] = [];
   allTrips: any[] = [];
+  pricesVisible = false;
+  visitedVisible = false;
 
   public type: string = 'bar';
   public chartData: Array<any> = [{}];
   public chartLabels: Array<any> = [];
-  public chartColors: Array<any> = [
-    {
-      backgroundColor: 'rgba(220,220,220,0.2)',
-      borderColor: 'rgba(220,220,220,1)',
-      borderWidth: 2,
-      pointBackgroundColor: 'rgba(220,220,220,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(220,220,220,1)'
-    },
-    {
-      backgroundColor: 'rgba(151,187,205,0.2)',
-      borderColor: 'rgba(151,187,205,1)',
-      borderWidth: 2,
-      pointBackgroundColor: 'rgba(151,187,205,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(151,187,205,1)'
-    }
-  ];
 
+  constructor(private tripService: TripService) {
+    this.getMyTrips();
+  }
 
+  private getMyTrips() {
+    this.sub1 = this.tripService.getTripsByUser(this.myId).
+      subscribe(x => {
+        this.myTrips = JSON.parse(x['_body']);
+      });
+  }
 
-
-  constructor(private tripService: TripService,
-    private userService: UserService) {
-    this.subscription =
-      this.tripService.getTripsByUser(this.myId).
-        subscribe(x => {
-          this.myTrips = JSON.parse(x['_body']);
-        });
-
+  private compareTripsPrices() {
+    if (this.pricesVisible) { //toggle
+       this.pricesVisible = false;
+       this.sub2.unsubscribe();
+        return;
+       }
+    if (this.sub3) this.sub3.unsubscribe();
+    this.visitedVisible = false;
+    this.pricesVisible = true;
     this.sub2 = this.tripService.getExcursionsAndVacations()
       .subscribe(res => {
         this.allTrips = (JSON.parse(res['_body']) as ITrip[])
           .map(trip => {
-            return { 'destination': trip.destination, 'price': trip.price }
+            return { 'destination': trip.destination, 'price': trip.price };
           });
-        console.log(`this.allTrips:${JSON.stringify(this.allTrips)}`);
         this.chartLabels = this.allTrips.map(x => x['destination']);
         this.chartData[0] = { data: this.allTrips.map(x => +x['price']), label: 'price' };
       });
-
   }
+
+  private getMostVisited() {
+    if (this.visitedVisible) { 
+      this.sub3.unsubscribe();
+      this.visitedVisible = false; 
+      return; 
+    }
+    if (this.sub2) this.sub2.unsubscribe();
+    this.pricesVisible = false;
+    this.visitedVisible = true;
+    this.sub3 = this.tripService.getMostVisited()
+      .subscribe(res => {
+        this.allTrips = (JSON.parse(res['_body']));
+        console.log("all trips:")
+        console.log(this.allTrips);
+        console.log(this.allTrips.map(x => x['destination']));
+        this.chartLabels = this.allTrips.map(x => x['destination']);
+        this.chartData[0] = { data: this.allTrips.map(x => +x['length']), label: 'visitors' };
+      });
+  }
+
+
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-    this.sub2.unsubscribe();
+    this.sub1.unsubscribe();
+    if(this.sub2)this.sub2.unsubscribe();
+    if(this.sub3)this.sub3.unsubscribe();
   }
 
   ngOnInit() {

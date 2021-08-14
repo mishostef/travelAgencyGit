@@ -8,6 +8,7 @@ import { TripModule } from 'app/trip/trip.module';
 import { ChartsModule } from 'angular-bootstrap-md';
 import { UserRoutingModule } from './user-routing.module';
 import { ConfirmDeactivateGuard } from 'app/shared/guards/confirm.deactivate';
+import { ChartComponent } from './chart/chart.component';
 
 
 
@@ -20,8 +21,8 @@ import { ConfirmDeactivateGuard } from 'app/shared/guards/confirm.deactivate';
     UserRoutingModule
   ],
   exports: [LoginComponent, RegisterComponent],
-  providers:[ConfirmDeactivateGuard],
-  declarations: [LoginComponent, RegisterComponent, ProfileComponent]
-  
+  providers: [ConfirmDeactivateGuard],
+  declarations: [LoginComponent, RegisterComponent, ProfileComponent, ChartComponent]
+
 })
 export class UserModule { }
