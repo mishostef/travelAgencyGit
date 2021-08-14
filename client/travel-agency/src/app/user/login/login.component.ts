@@ -22,14 +22,11 @@ export class LoginComponent implements OnInit {
 
   handleLogin({ email, password }: { email: string, password: string }) {
 
-    this.userService.loginUser(email, password).pipe(throttleTime(300))
+    this.userService.loginUser(email, password).pipe(throttleTime(500))
       .subscribe((res) => {
-        const { token } = getPropFromResponse(res, 'accessToken');
-        // document.cookie = token;
+        const { token } = getPropFromResponse(res, 'accessToken');       
         localStorage.setItem('authToken', token);
-        setTimeout(() => {
-          this.router.navigate([''])
-        }, 500);
+        this.router.navigate([''])       
       }, console.error);
   }
 
