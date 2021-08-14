@@ -11,13 +11,13 @@ import { getUserId } from 'app/shared/utils';
 export class TripService {
   token = null;
   private URL = "http://localhost:3030/excursion";
-  
-
-  constructor(private http: Http) {  }
 
 
+  constructor(private http: Http) { }
 
-  getExcursionsAndVacations(query = '') {   
+
+
+  getExcursionsAndVacations(query = '') {
     console.log(`query in service=${query}`);
     const res = this.http.get(`${this.URL}${query}`)
       .pipe(
@@ -29,7 +29,7 @@ export class TripService {
     return res;
   }
 
-  getExcursionsById(id) {   
+  getExcursionsById(id) {
     const res = this.http.get(`${this.URL}/${id}`)
       .pipe(
         tap((x) => {
@@ -41,7 +41,7 @@ export class TripService {
 
   }
 
-  reserveSeat(excursionId) {   
+  reserveSeat(excursionId) {
     const userId = getUserId();
     return this.http.post(`${this.URL}/${excursionId}`, JSON.stringify({ userId }))
   }
@@ -68,15 +68,18 @@ export class TripService {
     return this.http.get(`${this.URL}/vacations`)
   }
 
-  getExcursions(){
+  getExcursions() {
     return this.http.get(`${this.URL}/excursions`)
   }
-  getTripsByUser(id){
+  getTripsByUser(id) {
     return this.http.get(`${this.URL}?userid=${id}`)
-    .pipe(tap(x=>console.log(`in observable:${x}`))
-     
+      .pipe(tap(x => console.log(`in observable:${x}`))
+
       )
   }
 
+  getMostVisited() {
+    return this.http.get(`${this.URL}?orderby=visited`);
+  }
 
 }
