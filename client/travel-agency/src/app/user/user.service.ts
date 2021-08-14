@@ -13,12 +13,12 @@ export class UserService {
   private httpOptions = {
     headers: new Headers({ 'Content-Type': 'application/json' })
   };
-  
+
   constructor(private http: Http) { }
 
   registerUser(email, password) {
     const registerUrl = `${this.URL}/users/register`;
-    return this.http.post(registerUrl, JSON.stringify({ email, password }))//, this.httpOptions)
+    return this.http.post(registerUrl, JSON.stringify({ email, password }))
       .pipe(
         tap((res) => console.log(`added user ${res}`)),
         catchError(handleError<IUser>('addUser'))
@@ -31,27 +31,32 @@ export class UserService {
 
   loginUser(email, password) {
     const loginUrl = `${this.URL}/users/login`;
-    try{
-    var s= this.http.post(loginUrl, JSON.stringify({ email, password }))//, this.httpOptions)
-      .pipe(
-        tap((res) => console.log(`response: ${Object["values"](res)}`)),
-        catchError(handleError<any>('logUser'))
-      );
+    try {
+      var s = this.http.post(loginUrl, JSON.stringify({ email, password }))
+        .pipe(
+          tap((res) => console.log(`response: ${Object["values"](res)}`)),
+          catchError(handleError<any>('logUser'))
+        );
       return s;
-    }catch(err){
+    } catch (err) {
       alert(err)
     }
   }
- 
+
 
   logout() {
-    return this.http.get(`${this.URL}/users/logout`); 
-  }
-
-  getUserById(id){
-    const token = localStorage.getItem('authToken');
-   // this.httpOptions.headers["x-authorization"] = token;
-    return this.http.get(`${this.URL}/users/user/${id}`)//,this.httpOptions);
+    localStorage.clear();
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i];
+      let eqPos = cookie.indexOf("=");
+      let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+    if (document.cookie) {
+      document.cookie = 'name' + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+    return this.http.get(`${this.URL}/users/logout`);
   }
 
 }
