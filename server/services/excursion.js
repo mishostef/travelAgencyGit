@@ -84,6 +84,16 @@ async function getNames(participants) {
     return ((users.map(u => u.email)));
 }
 
+async function getMostVisited() {
+    const countries = await Excursion.find({ participants: { $exists: true, $ne: [] } })
+        .select('participants destination');
+
+    return countries.map(c => {
+        const length = c.participants.length;
+        return { length, destination: c.destination };
+    });
+}
+
 module.exports = {
     getAll,
     getById,
@@ -96,5 +106,6 @@ module.exports = {
     getVacations,
     getNew,
     getExcursions,
-    getByUserId
+    getByUserId,
+    getMostVisited
 }
