@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { getAll, create, getPromotions, getByDestination,
-    reserveSeat, getVacations, getNew, getExcursions,getByUserId } = require('../services/excursion');
+    reserveSeat, getVacations, getNew, getExcursions, getByUserId, getMostVisited } = require('../services/excursion');
 const { isAuth, isOwner } = require('../middlewares/guards');
 const { parseError } = require('../util');
 const preload = require('../middlewares/preload');
@@ -54,7 +54,8 @@ router.get('/excursions', async (req, res) => {
 router.get('/', async (req, res) => {
     const destination = req.query.destination;
     const id = req.query.userid;
-    //console.log(`id=${id}`);
+    const orderby = req.query.orderby;
+    console.log(`orderBy=${orderby}`);
     if (id) {
         try {
             const data = await getByUserId(id);
@@ -64,7 +65,7 @@ router.get('/', async (req, res) => {
             res.status(404).json({ message: 'error occurred' })
         }
     }
-   else if (destination) {
+    else if (destination) {
         try {
             const data = await getByDestination(destination);
             console.log(data);
@@ -72,6 +73,16 @@ router.get('/', async (req, res) => {
         } catch (err) {
             res.status(404).json({ message: 'no such record' });
         }
+    } else if (orderby) {
+        try {
+            const data = await getMostVisited();
+            console.log(data);
+            res.status(200).json(data);
+        } catch (err) {
+            console.log(err);
+            res.status(404).json({ message: 'cannot get resource' });
+        }
+
     } else {
         const data = await getAll();
         res.json(data);
