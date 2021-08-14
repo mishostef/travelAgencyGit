@@ -13,27 +13,27 @@ import { throttleTime } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
   constructor(private userService: UserService,
     private router: Router,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    
+
   }
 
   handleLogin({ email, password }: { email: string, password: string }) {
 
     this.userService.loginUser(email, password).pipe(throttleTime(300))
-    .subscribe((res) => {
-      const { token } = getPropFromResponse(res, 'accessToken');
-      document.cookie = token;
-      localStorage.setItem('authToken', token);
-      setTimeout(() => {
-        this.router.navigate([''])
-      }, 500);
-    }, console.error);
+      .subscribe((res) => {
+        const { token } = getPropFromResponse(res, 'accessToken');
+        // document.cookie = token;
+        localStorage.setItem('authToken', token);
+        setTimeout(() => {
+          this.router.navigate([''])
+        }, 500);
+      }, console.error);
   }
 
 
-  
+
 
 }
