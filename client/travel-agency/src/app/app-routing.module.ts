@@ -19,8 +19,7 @@ const routes: Routes = [
     {
         path: 'details/:id',
         pathMatch: 'full',
-        component: TripDetailsComponent,
-        canActivate: [AuthActivate],
+        component: TripDetailsComponent,      
         data: {
             authenticationRequired: true,
             failureRedirectTo: '/home'
