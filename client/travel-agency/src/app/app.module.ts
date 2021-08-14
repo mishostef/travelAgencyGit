@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ButtonsModule, MDBBootstrapModule, NavbarModule } from 'angular-bootstrap-md';
@@ -14,7 +13,8 @@ import { UserService } from './user/user.service';
 import { UserModule } from './user/user.module';
 import { TripModule } from './trip/trip.module';
 import { AuthActivate } from './shared/guards/auth.activate';
-
+import { Http, XHRBackend, RequestOptions } from '@angular/http';
+import { Router } from '@angular/router';
 
 
 import { HttpServiceLayer } from './shared/classes/HttpServiceLayer';
@@ -22,14 +22,12 @@ export function httpServiceFactory(xhrBackend: XHRBackend, requestOptions: Reque
   return new HttpServiceLayer(xhrBackend, requestOptions, router);
 }
 
-import { Http, Request, RequestOptionsArgs, Response, XHRBackend, RequestOptions, ConnectionBackend, Headers } from '@angular/http';
-import { Router } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
     ContactsComponent,
     HomeComponent,
-    NotFoundComponent,
+    NotFoundComponent
   ],
   imports: [
     AppRoutingModule,
@@ -40,7 +38,6 @@ import { Router } from '@angular/router';
     ButtonsModule,
     NavbarModule,
     UserModule,
-
     TripModule,
     MDBBootstrapModule.forRoot()
   ],
