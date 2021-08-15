@@ -14,30 +14,32 @@ import { Subscription } from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy {
   all: ITrip[];
   subscription: Subscription;
-
+  sub2: Subscription;
 
   constructor(private tripService: TripService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
-    this.router.events.filter(event => event instanceof NavigationStart)
+    this.sub2 = this.router.events.filter(event => event instanceof NavigationStart)
       .subscribe((ev) => {
         const url = ev.url
         const dest = url.split('=')[1];
         const destination = dest == undefined ? '' : `?destination=${dest}`;
-        this.getCurrentExcursions(destination);
+        if (destination != '') this.getCurrentExcursions(destination);
       });
+    this.getCurrentExcursions('');
   }
 
   private getCurrentExcursions(destination: string) {
     this.subscription = this.tripService.getExcursionsAndVacations(destination)
-    .subscribe((res) => {
-      this.all = getTripsFromResponse(res);
-    });
+      .subscribe((res) => {
+        this.all = getTripsFromResponse(res);
+      });
   }
 
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.sub2.unsubscribe();
   }
 
   ngOnInit() {
