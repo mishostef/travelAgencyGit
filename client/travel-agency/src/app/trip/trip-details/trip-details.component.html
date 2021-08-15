@@ -1,4 +1,9 @@
-<p>
-  trip-details works!
-</p>
-{{tripData|json}}
+<div>
+  <div *ngIf="tripData" class="wrapper">
+    <h6 class="text-primary word-break text-break text-wrap m-2">{{tripData.description}}</h6>
+    <h5 class="text-primary m-2 mt-5">price: <span class="text-danger">{{tripData.price}}</span></h5>
+    <h5 class="text-primary m-2">travel by: <span class="text-danger">{{tripData.type}}</span></h5>
+    <h5 class="text-primary m-2">start: <span class="text-danger">{{tripData.startAt | date:'MM/dd/yyyy'}}</span></h5>
+    <h5 class="text-primary m-2">end: <span class="text-danger">{{tripData.endAt | date:'MM/dd/yyyy'}}</span></h5>
+  </div>
+</div>
