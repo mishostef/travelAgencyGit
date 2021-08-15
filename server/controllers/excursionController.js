@@ -90,9 +90,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    // console.log(req.body);
-
-    const data = {
+        const data = {
         destination: req.body.destination,
         type: req.body.type,
         startAt: req.body.startAt,
@@ -112,13 +110,11 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/:id', isAuth(), preload(), async (req, res) => {
+router.get('/:id', preload(), async (req, res) => {
     const item = req.data.toObject();
     console.log(item);
     res.json(item);
 });
-
-
 
 
 router.post('/:id', isAuth(), async (req, res) => {
@@ -131,7 +127,7 @@ router.post('/:id', isAuth(), async (req, res) => {
         console.dir(err);
     }
     res.status('201').json({ "message": "success" });
-})
+});
 
 
 module.exports = router;
