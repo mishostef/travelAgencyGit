@@ -3,7 +3,6 @@ import{ITrip} from './interfaces/trip';
 export function getUserId(): string {
     const token = localStorage.getItem('authToken');
     if (!token) throw new Error(`You are not signed in!`)
-    console.log(`token is:${token}`);
     const data = JSON.parse(atob(token.split('.')[1]));
     const userId = data._id;
     return userId;
@@ -11,7 +10,6 @@ export function getUserId(): string {
 export function getEmail(): string {
     const token = localStorage.getItem('authToken');
     if (!token) throw new Error(`You are not signed in!`)
-    // console.log(`token is:${token}`);
     const data = JSON.parse(atob(token.split('.')[1]));
     const email = data.email;
     return email;
