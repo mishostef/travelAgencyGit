@@ -4,6 +4,7 @@ import { UserService } from 'app/user/user.service';
 import { getEmail } from 'app/shared/utils';
 import { NgForm } from '@angular/forms';
 import { TripService } from 'app/trip/trip.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -13,11 +14,12 @@ import { TripService } from 'app/trip/trip.service';
 export class HeaderComponent implements OnInit {
 
   get islogged() { return this.userService.isLogged(); }
-  
+
   constructor(private userService: UserService,
     private router: Router) { console.log(`logged:${this.islogged}`) }
 
   email = '';
+  sub: Subscription;
 
   ngOnInit() {
     this.email = this.getMail();
@@ -35,9 +37,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logoutHandler() {
-    this.userService.logout().subscribe((res) => console.log(`token deleted, status ${res.status}`));
     localStorage.clear();
-    this.router.navigate(['home']);
+    this.userService.logout().toPromise()//.subscribe((res) => console.log(`token deleted, status ${res.status}`));
+      .then(() => this.router.navigate(['home']));
   }
 
   searchByDestinationHandler(form: NgForm) {
