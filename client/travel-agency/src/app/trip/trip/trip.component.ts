@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ITrip } from 'app/shared/interfaces/trip';
 import { TripService } from '../trip.service';
 import { getUserId } from 'app/shared/utils';
 import { UserService } from 'app/user/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-trip',
   templateUrl: './trip.component.html',
   styleUrls: ['./trip.component.scss']
 })
-export class TripComponent implements OnInit {
+export class TripComponent implements OnInit, OnDestroy {
   @Input() data?: ITrip;
   start: string = "start date";
   end: string = "end date";
@@ -18,9 +19,14 @@ export class TripComponent implements OnInit {
 
   canJoin: boolean = false;
   id: string;
+  subscription: Subscription;
 
   constructor(private tripService: TripService,
     private userService: UserService) { }
+
+  ngOnDestroy(): void {
+    if (!!this.subscription) this.subscription.unsubscribe();
+  }
 
 
   ngOnInit() {
@@ -32,7 +38,7 @@ export class TripComponent implements OnInit {
 
   reserveHandler() {
     console.log(`id=${this.id}`);
-    this.tripService.reserveSeat(this.id).subscribe((res) => {
+    this.subscription = this.tripService.reserveSeat(this.id).subscribe((res) => {
       console.dir(res);
       const body = JSON.parse(res['_body']);
       console.log(`body ${body}`);
